@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, LogBox, Modal, Alert } from "react-native";
+import { StyleSheet, View, Text, LogBox, Alert } from "react-native";
 import Drawer from "react-native-drawer";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
-import Screen from "../components/Screen";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import MenuScreen from "./MenuScreen";
 
 import SavedColors from "../assets/SavedColors";
-import ColorsScreen from "./ColorsScreen";
 
 const [incrementBy, decrementBy] = [10, -5];
 const handleColorChange = (toChange, initialValue, change) => {
@@ -28,13 +26,18 @@ const handleSave = (toSave) => {
   Alert.alert("Notice!", "Saved successfully...");
 };
 
-function MainScreen({}) {
+function MainScreen({ navigation }) {
   const [red, setRed] = useState(0);
   const [green, setGreen] = useState(0);
   const [blue, setBlue] = useState(0);
 
   const [isDrawer, setIsDrawer] = useState(false);
-  const [modelVisible, setModelVisible] = useState(false);
+
+  const setColor = (color) => {
+    setRed(color.red);
+    setGreen(color.green);
+    setBlue(color.blue);
+  };
 
   LogBox.ignoreLogs([
     "componentWillReceiveProps has been renamed",
@@ -46,26 +49,18 @@ function MainScreen({}) {
       title: "Saved",
       onPress: () => {
         setIsDrawer(false);
-        setModelVisible(true);
+        navigation.navigate("Saved", { setColor });
       },
     },
     {
-      title: "Account (Demo)",
+      title: "Account (todo)",
       onPress: null,
     },
     {
-      title: "Setting (Demo)",
+      title: "Setting (todo)",
       onPress: null,
     },
   ];
-
-  const setColor = (color) => {
-    setRed(color.red);
-    setGreen(color.green);
-    setBlue(color.blue);
-
-    setModelVisible(false);
-  };
 
   return (
     <Drawer
@@ -80,7 +75,7 @@ function MainScreen({}) {
         />
       }
     >
-      <Screen style={styles.container}>
+      <View style={styles.container}>
         {!isDrawer && (
           <Icon
             name="menu"
@@ -97,7 +92,10 @@ function MainScreen({}) {
               { backgroundColor: `rgb(${red}, ${green} , ${blue} )` },
             ]}
           />
-          <Text style={styles.text}>{`rgb(${red}, ${green}, ${blue})`}</Text>
+          <Text
+            selectable
+            style={styles.text}
+          >{`rgb(${red}, ${green}, ${blue})`}</Text>
 
           <ColoringButton
             title="Red"
@@ -137,14 +135,7 @@ function MainScreen({}) {
             />
           </View>
         </View>
-      </Screen>
-
-      <Modal animationType="slide" visible={modelVisible}>
-        <ColorsScreen
-          onClose={() => setModelVisible(false)}
-          setColor={setColor}
-        />
-      </Modal>
+      </View>
     </Drawer>
   );
 }

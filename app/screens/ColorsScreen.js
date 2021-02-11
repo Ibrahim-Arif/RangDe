@@ -1,17 +1,12 @@
 import React from "react";
-import { FlatList, StyleSheet, View, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import SavedColors from "../assets/SavedColors";
 import ColorItem from "../components/ColorItem";
-import colors from "../config/colors";
 
-function ColorsScreen({ onClose, setColor }) {
+function ColorsScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onClose}>
-        <View style={styles.backIcon} />
-      </TouchableOpacity>
-
       <FlatList
         numColumns={2}
         columnWrapperStyle={{
@@ -20,7 +15,11 @@ function ColorsScreen({ onClose, setColor }) {
         }}
         data={SavedColors}
         renderItem={({ item }) => (
-          <ColorItem color={item.color} setColor={setColor} />
+          <ColorItem
+            color={item.color}
+            navigation={navigation}
+            setColor={navigation.getParam("setColor")}
+          />
         )}
       />
     </View>
@@ -30,15 +29,7 @@ function ColorsScreen({ onClose, setColor }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  backIcon: {
-    backgroundColor: colors.darkgrey,
-    width: 25,
-    height: 5,
-    borderRadius: 10,
-    marginVertical: 10,
-    alignSelf: "center",
-    marginBottom: 30,
+    top: 10,
   },
 });
 export default ColorsScreen;

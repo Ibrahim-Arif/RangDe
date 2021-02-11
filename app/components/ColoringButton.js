@@ -12,16 +12,16 @@ function ColoringButton({ title, value, onIncrement, onDecrement }) {
       <View style={styles.detailContainer}>
         <Icon
           IconComponent={
-            <Entypo name="plus" size={24} color={colors.primary} />
+            <Entypo name="minus" size={24} color={colors.primary} />
           }
-          onPress={onIncrement}
+          onPress={onDecrement}
         />
         <Text style={styles.text}>{value}</Text>
         <Icon
           IconComponent={
-            <Entypo name="minus" size={24} color={colors.primary} />
+            <Entypo name="plus" size={24} color={colors.primary} />
           }
-          onPress={onDecrement}
+          onPress={onIncrement}
         />
       </View>
     </View>
