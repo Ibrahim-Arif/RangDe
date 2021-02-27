@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, LogBox, Alert, Button } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
-import SavedColors from "../assets/SavedColors";
 import currentState from "../assets/currentState";
 
 const [incrementBy, decrementBy] = [10, -5];
@@ -17,13 +17,15 @@ const handleColorChange = (toChange, initialValue, change) => {
       : initialValue + change
   );
 };
-const handleSave = (toSave) => {
-  SavedColors.push({
-    key: SavedColors.length + 1,
-    color: toSave,
-  });
-  Alert.alert("Notice!", "Saved successfully...");
-  console.log(SavedColors);
+const handleSave = async (toSave) => {
+  console.log(JSON.stringify(toSave));
+  try {
+    await AsyncStorage.setItem(JSON.stringify(toSave), "");
+
+    Alert.alert("Notice!", "Saved successfully...");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 function MainScreen({ navigation, route }) {
@@ -43,8 +45,6 @@ function MainScreen({ navigation, route }) {
     "Non-serializable values were found",
   ]);
 
-  // console.log(currentState.red, currentState.green, currentState.blue);
-  // setColor();
   return (
     <Screen style={styles.container}>
       <Icon
