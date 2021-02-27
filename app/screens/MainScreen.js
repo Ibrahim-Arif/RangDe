@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, LogBox, Alert } from "react-native";
+import { StyleSheet, View, Text, LogBox, Alert, Button } from "react-native";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
-import MenuScreen from "./MenuScreen";
 import SavedColors from "../assets/SavedColors";
+import currentState from "../assets/currentState";
 
 const [incrementBy, decrementBy] = [10, -5];
 const handleColorChange = (toChange, initialValue, change) => {
@@ -23,19 +23,18 @@ const handleSave = (toSave) => {
     color: toSave,
   });
   Alert.alert("Notice!", "Saved successfully...");
+  console.log(SavedColors);
 };
 
-function MainScreen({ navigation }) {
+function MainScreen({ navigation, route }) {
   const [red, setRed] = useState(0);
   const [green, setGreen] = useState(0);
   const [blue, setBlue] = useState(0);
 
-  const [isDrawer, setIsDrawer] = useState(false);
-
-  const setColor = (color) => {
-    setRed(color.red);
-    setGreen(color.green);
-    setBlue(color.blue);
+  const setColor = () => {
+    setRed(currentState.red);
+    setGreen(currentState.green);
+    setBlue(currentState.blue);
   };
 
   LogBox.ignoreLogs([
@@ -44,34 +43,16 @@ function MainScreen({ navigation }) {
     "Non-serializable values were found",
   ]);
 
-  const menuList = [
-    {
-      title: "Saved",
-      onPress: () => {
-        setIsDrawer(false);
-        navigation.navigate("Saved", { setColor });
-      },
-    },
-    {
-      title: "Account (todo)",
-      onPress: null,
-    },
-    {
-      title: "Settings (todo)",
-      onPress: null,
-    },
-  ];
-
+  // console.log(currentState.red, currentState.green, currentState.blue);
+  // setColor();
   return (
     <Screen style={styles.container}>
-      {!isDrawer && (
-        <Icon
-          name="menu"
-          onPress={() => navigation.openDrawer()}
-          style={{ marginLeft: 10 }}
-        />
-      )}
-      {isDrawer && <View style={{ height: 40 }} />}
+      <Icon
+        name="menu"
+        onPress={() => navigation.openDrawer()}
+        style={{ marginLeft: 10 }}
+      />
+      <Button title="refresh" onPress={() => setColor()} />
 
       <View style={styles.secondContainer}>
         <View

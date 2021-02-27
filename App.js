@@ -5,14 +5,26 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import MainScreen from "./app/screens/MainScreen";
 import ColorsScreen from "./app/screens/ColorsScreen";
+import Icon from "./app/components/Icon";
 
 const appStack = createStackNavigator();
 const savedStack = createStackNavigator();
 const drawer = createDrawerNavigator();
 
-const SavedNavigation = () => (
+const SavedNavigation = ({ navigation, route }) => (
   <savedStack.Navigator initialRouteName="Saved">
-    <savedStack.Screen name="Saved" component={ColorsScreen} />
+    <savedStack.Screen
+      name="Saved"
+      component={ColorsScreen}
+      options={{
+        headerLeft: () => (
+          <Icon
+            name="keyboard-backspace"
+            onPress={() => navigation.navigate("Home")}
+          />
+        ),
+      }}
+    />
   </savedStack.Navigator>
 );
 
@@ -37,7 +49,6 @@ const MyDrawer = () => (
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <AppNavigation /> */}
       <MyDrawer />
     </NavigationContainer>
   );

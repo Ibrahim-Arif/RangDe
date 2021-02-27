@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import currentState from "../assets/currentState";
 
-function ColorItem({ color, setColor, navigation }) {
+function ColorItem({ color, navigation }) {
   const { red, green, blue } = color;
 
   return (
@@ -11,7 +12,10 @@ function ColorItem({ color, setColor, navigation }) {
         { backgroundColor: `rgb(${red}, ${green}, ${blue})` },
       ]}
       onPress={() => {
-        setColor(color);
+        currentState.red = red;
+        currentState.green = green;
+        currentState.blue = blue;
+
         navigation.navigate("Home");
       }}
     >
