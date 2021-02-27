@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, LogBox, Alert } from "react-native";
-import Drawer from "react-native-drawer";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
+import Screen from "../components/Screen";
 import MenuScreen from "./MenuScreen";
 
 import SavedColors from "../assets/SavedColors";
@@ -63,80 +63,80 @@ function MainScreen({ navigation }) {
   ];
 
   return (
-    <Drawer
-      type="static"
-      openDrawerOffset={0.5}
-      open={isDrawer}
-      content={
-        <MenuScreen
-          data={menuList}
-          onBack={() => setIsDrawer(false)}
-          renderRight={() => setIsDrawer(false)}
+    // <Drawer
+    //   type="static"
+    //   openDrawerOffset={0.5}
+    //   open={isDrawer}
+    //   content={
+    //     <MenuScreen
+    //       data={menuList}
+    //       onBack={() => setIsDrawer(false)}
+    //       renderRight={() => setIsDrawer(false)}
+    //     />
+    //   }
+    // >
+    <Screen style={styles.container}>
+      {!isDrawer && (
+        <Icon
+          name="menu"
+          onPress={() => navigation.navigate("Saved", { setColor })}
+          style={{ marginLeft: 10 }}
         />
-      }
-    >
-      <View style={styles.container}>
-        {!isDrawer && (
-          <Icon
-            name="menu"
-            onPress={() => setIsDrawer(true)}
-            style={{ marginLeft: 10 }}
-          />
-        )}
-        {isDrawer && <View style={{ height: 40 }} />}
+      )}
+      {isDrawer && <View style={{ height: 40 }} />}
 
-        <View style={styles.secondContainer}>
-          <View
-            style={[
-              styles.color,
-              { backgroundColor: `rgb(${red}, ${green} , ${blue} )` },
-            ]}
-          />
-          <Text
-            selectable
-            style={styles.text}
-          >{`rgb(${red}, ${green}, ${blue})`}</Text>
+      <View style={styles.secondContainer}>
+        <View
+          style={[
+            styles.color,
+            { backgroundColor: `rgb(${red}, ${green} , ${blue} )` },
+          ]}
+        />
+        <Text
+          selectable
+          style={styles.text}
+        >{`rgb(${red}, ${green}, ${blue})`}</Text>
 
-          <ColoringButton
-            title="Red"
-            value={red}
-            onIncrement={() => handleColorChange(setRed, red, incrementBy)}
-            onDecrement={() => handleColorChange(setRed, red, decrementBy)}
-          />
-          <ColoringButton
-            title="Green"
-            value={green}
-            onIncrement={() => handleColorChange(setGreen, green, incrementBy)}
-            onDecrement={() => handleColorChange(setGreen, green, decrementBy)}
-          />
-          <ColoringButton
-            title="Blue"
-            value={blue}
-            onIncrement={() => handleColorChange(setBlue, blue, incrementBy)}
-            onDecrement={() => handleColorChange(setBlue, blue, decrementBy)}
-          />
+        <ColoringButton
+          title="Red"
+          value={red}
+          onIncrement={() => handleColorChange(setRed, red, incrementBy)}
+          onDecrement={() => handleColorChange(setRed, red, decrementBy)}
+        />
+        <ColoringButton
+          title="Green"
+          value={green}
+          onIncrement={() => handleColorChange(setGreen, green, incrementBy)}
+          onDecrement={() => handleColorChange(setGreen, green, decrementBy)}
+        />
+        <ColoringButton
+          title="Blue"
+          value={blue}
+          onIncrement={() => handleColorChange(setBlue, blue, incrementBy)}
+          onDecrement={() => handleColorChange(setBlue, blue, decrementBy)}
+        />
 
-          <View style={styles.buttonContainer}>
-            <MyButton
-              title="reset"
-              color={colors.primary}
-              style={{ width: "30%" }}
-              onPress={() => {
-                setRed(0);
-                setGreen(0);
-                setBlue(0);
-              }}
-            />
-            <MyButton
-              title="save"
-              color={colors.primary}
-              style={{ width: "30%" }}
-              onPress={() => handleSave({ red: red, green: green, blue: blue })}
-            />
-          </View>
+        <View style={styles.buttonContainer}>
+          <MyButton
+            title="reset"
+            color={colors.primary}
+            style={{ width: "30%" }}
+            onPress={() => {
+              setRed(0);
+              setGreen(0);
+              setBlue(0);
+            }}
+          />
+          <MyButton
+            title="save"
+            color={colors.primary}
+            style={{ width: "30%" }}
+            onPress={() => handleSave({ red: red, green: green, blue: blue })}
+          />
         </View>
       </View>
-    </Drawer>
+    </Screen>
+    // </Drawer>
   );
 }
 

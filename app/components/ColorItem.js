@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 function ColorItem({ color, setColor, navigation }) {
-  console.log(navigation);
   const { red, green, blue } = color;
 
   return (

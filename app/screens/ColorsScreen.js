@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import SavedColors from "../assets/SavedColors";
 import ColorItem from "../components/ColorItem";
 
-function ColorsScreen({ navigation }) {
+function ColorsScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
@@ -18,7 +18,7 @@ function ColorsScreen({ navigation }) {
           <ColorItem
             color={item.color}
             navigation={navigation}
-            setColor={navigation.getParam("setColor")}
+            setColor={route.params.setColor}
           />
         )}
       />
