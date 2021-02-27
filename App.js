@@ -1,27 +1,44 @@
 import React from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
 import MainScreen from "./app/screens/MainScreen";
 import ColorsScreen from "./app/screens/ColorsScreen";
 
-const stack = createStackNavigator();
+const appStack = createStackNavigator();
+const savedStack = createStackNavigator();
+const drawer = createDrawerNavigator();
+
+const SavedNavigation = () => (
+  <savedStack.Navigator initialRouteName="Saved">
+    <savedStack.Screen name="Saved" component={ColorsScreen} />
+  </savedStack.Navigator>
+);
 
 const AppNavigation = () => (
-  <stack.Navigator initialRouteName="Home">
-    <stack.Screen
-      name="Home"
-      component={MainScreen}
-      options={{ headerShown: false }}
-    />
-    <stack.Screen name="Saved" component={ColorsScreen} />
-  </stack.Navigator>
+  <appStack.Navigator
+    initialRouteName="Home"
+    screenOptions={{ headerShown: false }}
+  >
+    <appStack.Screen name="Home" component={MainScreen} />
+  </appStack.Navigator>
+);
+
+const MyDrawer = () => (
+  <drawer.Navigator initialRouteName="Home">
+    <drawer.Screen name="Home" component={AppNavigation} />
+    <drawer.Screen name="Saved" component={SavedNavigation} />
+    {/* <drawer.Screen name="Account" component={() => alert("todo")} />
+    <drawer.Screen name="Settings" component={() => alert("todo")} /> */}
+  </drawer.Navigator>
 );
 
 export default function App() {
   return (
     <NavigationContainer>
-      <AppNavigation />
+      {/* <AppNavigation /> */}
+      <MyDrawer />
     </NavigationContainer>
   );
 }

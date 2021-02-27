@@ -7,7 +7,6 @@ import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
 import MenuScreen from "./MenuScreen";
-
 import SavedColors from "../assets/SavedColors";
 
 const [incrementBy, decrementBy] = [10, -5];
@@ -42,6 +41,7 @@ function MainScreen({ navigation }) {
   LogBox.ignoreLogs([
     "componentWillReceiveProps has been renamed",
     "componentWillMount has been renamed",
+    "Non-serializable values were found",
   ]);
 
   const menuList = [
@@ -57,29 +57,17 @@ function MainScreen({ navigation }) {
       onPress: null,
     },
     {
-      title: "Setting (todo)",
+      title: "Settings (todo)",
       onPress: null,
     },
   ];
 
   return (
-    // <Drawer
-    //   type="static"
-    //   openDrawerOffset={0.5}
-    //   open={isDrawer}
-    //   content={
-    //     <MenuScreen
-    //       data={menuList}
-    //       onBack={() => setIsDrawer(false)}
-    //       renderRight={() => setIsDrawer(false)}
-    //     />
-    //   }
-    // >
     <Screen style={styles.container}>
       {!isDrawer && (
         <Icon
           name="menu"
-          onPress={() => navigation.navigate("Saved", { setColor })}
+          onPress={() => navigation.openDrawer()}
           style={{ marginLeft: 10 }}
         />
       )}
@@ -136,7 +124,6 @@ function MainScreen({ navigation }) {
         </View>
       </View>
     </Screen>
-    // </Drawer>
   );
 }
 

@@ -18,7 +18,7 @@ function ColorsScreen({ route, navigation }) {
           <ColorItem
             color={item.color}
             navigation={navigation}
-            setColor={route.params.setColor}
+            // setColor={route.params.setColor}
           />
         )}
       />
