@@ -41,8 +41,6 @@ const MyDrawer = () => (
   <drawer.Navigator initialRouteName="Home">
     <drawer.Screen name="Home" component={AppNavigation} />
     <drawer.Screen name="Saved" component={SavedNavigation} />
-    {/* <drawer.Screen name="Account" component={() => alert("todo")} />
-    <drawer.Screen name="Settings" component={() => alert("todo")} /> */}
   </drawer.Navigator>
 );
 

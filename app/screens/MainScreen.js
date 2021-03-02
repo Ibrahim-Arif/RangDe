@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, LogBox, Alert, Button } from "react-native";
+import { StyleSheet, View, Text, Alert, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../config/colors";
@@ -27,7 +27,7 @@ const handleSave = async (toSave) => {
   }
 };
 
-function MainScreen({ navigation, route }) {
+function MainScreen({ navigation }) {
   const [red, setRed] = useState(0);
   const [green, setGreen] = useState(0);
   const [blue, setBlue] = useState(0);
@@ -37,12 +37,6 @@ function MainScreen({ navigation, route }) {
     setGreen(currentState.green);
     setBlue(currentState.blue);
   };
-
-  LogBox.ignoreLogs([
-    "componentWillReceiveProps has been renamed",
-    "componentWillMount has been renamed",
-    "Non-serializable values were found",
-  ]);
 
   return (
     <Screen style={styles.container}>

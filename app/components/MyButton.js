@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import { TouchableNativeFeedback, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 function MyButton({
@@ -9,28 +9,29 @@ function MyButton({
   color = "#000",
 }) {
   return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      style={[styles.container, { backgroundColor: color }, style]}
+    <TouchableNativeFeedback
+      background={TouchableNativeFeedback.Ripple("skyblue", false, 70)}
       onPress={onPress}
     >
-      <Text style={[styles.text, titleStyle]}>{title}</Text>
-    </TouchableOpacity>
+      <View style={[styles.container, { backgroundColor: color }, style]}>
+        <Text style={[styles.text, titleStyle]}>{title}</Text>
+      </View>
+    </TouchableNativeFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: "center",
     borderRadius: 25,
     justifyContent: "center",
-    alignItems: "center",
     padding: 15,
     width: "100%",
   },
   text: {
+    color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
     textTransform: "capitalize",
   },
 });
