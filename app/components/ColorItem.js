@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import currentState from "../assets/currentState";
 
-function ColorItem({ color, navigation }) {
+function ColorItem({ color, navigation, onLongPress }) {
   const { red, green, blue } = color;
 
   return (
@@ -18,6 +18,7 @@ function ColorItem({ color, navigation }) {
 
         navigation.navigate("Home");
       }}
+      onLongPress={onLongPress}
     >
       <Text style={styles.text}>{`rgb(${red}, ${green}, ${blue})`}</Text>
     </TouchableOpacity>

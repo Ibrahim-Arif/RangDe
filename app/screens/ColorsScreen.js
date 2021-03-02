@@ -1,8 +1,13 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ColorItem from "../components/ColorItem";
 import useSaved from "../hooks/useSaved";
+
+const handleLongPress = ({ color }) => {
+  AsyncStorage.removeItem(JSON.stringify(color));
+};
 
 function ColorsScreen({ navigation }) {
   const { data } = useSaved();
@@ -17,7 +22,11 @@ function ColorsScreen({ navigation }) {
         }}
         data={data}
         renderItem={({ item }) => (
-          <ColorItem color={item.color} navigation={navigation} />
+          <ColorItem
+            color={item.color}
+            navigation={navigation}
+            onLongPress={() => handleLongPress(item)}
+          />
         )}
       />
     </View>
