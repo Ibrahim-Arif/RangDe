@@ -11,7 +11,7 @@ const appStack = createStackNavigator();
 const savedStack = createStackNavigator();
 const drawer = createDrawerNavigator();
 
-const SavedNavigation = ({ navigation, route }) => (
+const SavedNavigation = ({ navigation }) => (
   <savedStack.Navigator initialRouteName="Saved">
     <savedStack.Screen
       name="Saved"

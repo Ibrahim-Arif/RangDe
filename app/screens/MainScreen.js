@@ -18,7 +18,6 @@ const handleColorChange = (toChange, initialValue, change) => {
   );
 };
 const handleSave = async (toSave) => {
-  console.log(JSON.stringify(toSave));
   try {
     await AsyncStorage.setItem(JSON.stringify(toSave), "");
 

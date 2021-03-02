@@ -1,9 +1,11 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, Platform, StatusBar } from "react-native";
 
-function Screen({ children, style }) {
+function Screen({ children, style, ...otherProps }) {
   return (
-    <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
+    <SafeAreaView style={[styles.container, style]} {...otherProps}>
+      {children}
+    </SafeAreaView>
   );
 }
 
