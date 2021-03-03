@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, Alert, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -7,7 +7,15 @@ import ColoringButton from "../components/ColoringButton";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
-import currentState from "../assets/currentState";
+
+import {
+  useRed,
+  useUpdateRed,
+  useGreen,
+  useUpdateGreen,
+  useBlue,
+  useUpdateBlue,
+} from "../components/StateContext";
 
 const [incrementBy, decrementBy] = [10, -5];
 const handleColorChange = (toChange, initialValue, change) => {
@@ -28,15 +36,14 @@ const handleSave = async (toSave) => {
 };
 
 function MainScreen({ navigation }) {
-  const [red, setRed] = useState(0);
-  const [green, setGreen] = useState(0);
-  const [blue, setBlue] = useState(0);
+  const red = useRed();
+  const setRed = useUpdateRed();
 
-  const setColor = () => {
-    setRed(currentState.red);
-    setGreen(currentState.green);
-    setBlue(currentState.blue);
-  };
+  const green = useGreen();
+  const setGreen = useUpdateGreen();
+
+  const blue = useBlue();
+  const setBlue = useUpdateBlue();
 
   return (
     <Screen style={styles.container}>
@@ -45,7 +52,6 @@ function MainScreen({ navigation }) {
         onPress={() => navigation.openDrawer()}
         style={{ marginLeft: 10 }}
       />
-      <Button title="refresh" onPress={() => setColor()} />
 
       <View style={styles.secondContainer}>
         <View

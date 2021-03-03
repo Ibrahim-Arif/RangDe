@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import MainScreen from "./app/screens/MainScreen";
 import ColorsScreen from "./app/screens/ColorsScreen";
 import Icon from "./app/components/Icon";
+import { StateProvider } from "./app/components/StateContext";
 
 const appStack = createStackNavigator();
 const savedStack = createStackNavigator();
@@ -47,7 +48,9 @@ const MyDrawer = () => (
 export default function App() {
   return (
     <NavigationContainer>
-      <MyDrawer />
+      <StateProvider>
+        <MyDrawer />
+      </StateProvider>
     </NavigationContainer>
   );
 }
