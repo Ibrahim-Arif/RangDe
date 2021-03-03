@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, Alert, Button } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../config/colors";
@@ -52,7 +52,6 @@ function MainScreen({ navigation }) {
         onPress={() => navigation.openDrawer()}
         style={{ marginLeft: 10 }}
       />
-
       <View style={styles.secondContainer}>
         <View
           style={[
@@ -64,7 +63,13 @@ function MainScreen({ navigation }) {
           selectable
           style={styles.text}
         >{`rgb(${red}, ${green}, ${blue})`}</Text>
-
+      </View>
+      <View
+        style={{
+          flex: 1.5,
+          alignItems: "center",
+        }}
+      >
         <ColoringButton
           title="Red"
           value={red}
@@ -83,25 +88,25 @@ function MainScreen({ navigation }) {
           onIncrement={() => handleColorChange(setBlue, blue, incrementBy)}
           onDecrement={() => handleColorChange(setBlue, blue, decrementBy)}
         />
+      </View>
 
-        <View style={styles.buttonContainer}>
-          <MyButton
-            title="reset"
-            color={colors.primary}
-            style={{ width: "30%" }}
-            onPress={() => {
-              setRed(0);
-              setGreen(0);
-              setBlue(0);
-            }}
-          />
-          <MyButton
-            title="save"
-            color={colors.primary}
-            style={{ width: "30%" }}
-            onPress={() => handleSave({ red: red, green: green, blue: blue })}
-          />
-        </View>
+      <View style={styles.buttonContainer}>
+        <MyButton
+          title="reset"
+          color={colors.primary}
+          style={{ width: "30%" }}
+          onPress={() => {
+            setRed(0);
+            setGreen(0);
+            setBlue(0);
+          }}
+        />
+        <MyButton
+          title="save"
+          color={colors.primary}
+          style={{ width: "30%" }}
+          onPress={() => handleSave({ red: red, green: green, blue: blue })}
+        />
       </View>
     </Screen>
   );
@@ -113,8 +118,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   secondContainer: {
-    top: 30,
+    flex: 2,
     alignItems: "center",
+    justifyContent: "center",
   },
   color: {
     width: 150,
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 20,
     flexDirection: "row",
-    width: "100%",
+    flex: 1,
     justifyContent: "space-evenly",
   },
 });

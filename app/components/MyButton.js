@@ -10,7 +10,7 @@ function MyButton({
 }) {
   return (
     <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple("skyblue", false, 70)}
+      background={TouchableNativeFeedback.Ripple("skyblue", false, 55)}
       onPress={onPress}
     >
       <View style={[styles.container, { backgroundColor: color }, style]}>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 25,
     justifyContent: "center",
-    padding: 15,
+    height: 55,
     width: "100%",
   },
   text: {
