@@ -1,21 +1,30 @@
 import { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default useApi = () => {
-  const [data, setdata] = useState([]);
-  const fileArray = [];
+export default function useSaved() {
+  const [saved, setSaved] = useState([]);
 
-  try {
-    AsyncStorage.getAllKeys().then((keys) => {
-      keys.forEach((key, index) =>
-        fileArray.push({ key: index + 1, color: JSON.parse(key) })
-      );
+  const getSaved = async () => {
+    const fileArray = [];
 
-      setdata(fileArray);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      keys.forEach((key) => fileArray.push({ color: JSON.parse(key) }));
+      setSaved(fileArray);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  return { data };
-};
+  const updateSaved = () => {
+    try {
+      saved.forEach(async (color) => {
+        await AsyncStorage.setItem(JSON.stringify(color), "");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { saved, setSaved, getSaved, updateSaved };
+}
