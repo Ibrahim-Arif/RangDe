@@ -94,7 +94,8 @@ function MainScreen({ navigation }) {
         <MyButton
           title="reset"
           color={colors.primary}
-          style={{ width: "30%" }}
+          rippleColor="#161616"
+          style={{ width: "40%" }}
           onPress={() => {
             setRed(0);
             setGreen(0);
@@ -104,7 +105,8 @@ function MainScreen({ navigation }) {
         <MyButton
           title="save"
           color={colors.primary}
-          style={{ width: "30%" }}
+          rippleColor="#161616"
+          style={{ width: "40%" }}
           onPress={() => handleSave({ red: red, green: green, blue: blue })}
         />
       </View>

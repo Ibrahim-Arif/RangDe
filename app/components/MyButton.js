@@ -7,16 +7,19 @@ function MyButton({
   style,
   titleStyle,
   color = "#000",
+  rippleColor = "#898989",
 }) {
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple("skyblue", false, 55)}
-      onPress={onPress}
-    >
-      <View style={[styles.container, { backgroundColor: color }, style]}>
-        <Text style={[styles.text, titleStyle]}>{title}</Text>
-      </View>
-    </TouchableNativeFeedback>
+    <View style={[styles.container, { backgroundColor: color }, style]}>
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple(rippleColor)}
+        onPress={onPress}
+      >
+        <View style={styles.container}>
+          <Text style={[styles.text, titleStyle]}>{title}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    </View>
   );
 }
 
@@ -27,10 +30,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 55,
     width: "100%",
+    overflow: "hidden",
   },
   text: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     textTransform: "capitalize",
   },
