@@ -1,30 +1,35 @@
-import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSavedd } from "../components/StateContext";
 
 export default function useSaved() {
-  const [saved, setSaved] = useState([]);
+  // AsyncStorage.clear();
+  const saved = useSavedd();
 
-  const getSaved = async () => {
-    const fileArray = [];
+  // const getSaved = async () => {
+  //   const fileArray = [];
+  //   console.log("\ninside getsaved");
 
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      keys.forEach((key) => fileArray.push({ color: JSON.parse(key) }));
-      setSaved(fileArray);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const keys = await AsyncStorage.getAllKeys();
+  //     keys.forEach((key) => fileArray.push(JSON.parse(key)));
 
-  const updateSaved = () => {
-    try {
-      saved.forEach(async (color) => {
-        await AsyncStorage.setItem(JSON.stringify(color), "");
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     setSaved(fileArray);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  return { saved, setSaved, getSaved, updateSaved };
+  // const updateSaved = () => {
+  //   try {
+  //     // saved.forEach((color) => {
+  //     //   AsyncStorage.setItem(JSON.stringify(color), "").then();
+  //     // });
+
+  //     console.log("\ninside update saved");
+  //     console.log(saved);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // return { updateSaved };
 }

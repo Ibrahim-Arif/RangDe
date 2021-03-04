@@ -1,31 +1,31 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ColorItem from "../components/ColorItem";
-import { useSavedd, useUpdateSavedd } from "../components/StateContext";
+import useSaved from "../hooks/useSaved";
+
+const handleLongPress = ({ color }) => {
+  AsyncStorage.removeItem(JSON.stringify(color));
+};
 
 function ColorsScreen({ navigation }) {
-  const saved = useSavedd();
-  const setSaved = useUpdateSavedd();
-  let i = 1;
-
-  if (!saved.length) alert("empty!");
+  const { data } = useSaved();
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={saved}
-        keyExtractor={() => JSON.stringify(i++)}
         numColumns={2}
         columnWrapperStyle={{
           justifyContent: "space-around",
           marginVertical: 5,
         }}
+        data={data}
         renderItem={({ item }) => (
           <ColorItem
-            color={item}
+            color={item.color}
             navigation={navigation}
-            onLongPress={() => setSaved(saved.filter((c) => c !== item))}
+            onLongPress={() => handleLongPress(item)}
           />
         )}
       />

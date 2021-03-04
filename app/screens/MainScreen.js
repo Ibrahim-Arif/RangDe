@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
@@ -14,8 +15,6 @@ import {
   useUpdateGreen,
   useBlue,
   useUpdateBlue,
-  useSavedd,
-  useUpdateSavedd,
 } from "../components/StateContext";
 
 const [incrementBy, decrementBy] = [10, -5];
@@ -25,6 +24,15 @@ const handleColorChange = (toChange, initialValue, change) => {
       ? initialValue
       : initialValue + change
   );
+};
+const handleSave = async (toSave) => {
+  try {
+    await AsyncStorage.setItem(JSON.stringify(toSave), "");
+
+    Alert.alert("Notice!", "Saved successfully...");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 function MainScreen({ navigation }) {
@@ -36,14 +44,6 @@ function MainScreen({ navigation }) {
 
   const blue = useBlue();
   const setBlue = useUpdateBlue();
-
-  const saved = useSavedd();
-  const setSaved = useUpdateSavedd();
-
-  const handleSave = (toSave) => {
-    setSaved([...saved, toSave]);
-    Alert.alert("Notice!", "Saved successfully.");
-  };
 
   return (
     <Screen style={styles.container}>
