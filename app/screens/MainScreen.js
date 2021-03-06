@@ -7,16 +7,7 @@ import ColoringButton from "../components/ColoringButton";
 import MyButton from "../components/MyButton";
 import Icon from "../components/Icon";
 import Screen from "../components/Screen";
-
-import {
-  // useRed,
-  // useUpdateRed,
-  // useGreen,
-  // useUpdateGreen,
-  // useBlue,
-  // useUpdateBlue,
-  useColors,
-} from "../components/StateContext";
+import { useColors } from "../components/StateContext";
 
 const [incrementBy, decrementBy] = [10, -5];
 const handleColorChange = (toChange, initialValue, change) => {
@@ -37,14 +28,6 @@ const handleSave = async (toSave) => {
 };
 
 function MainScreen({ navigation }) {
-  // const red = useRed();
-  // const setRed = useUpdateRed();
-
-  // const green = useGreen();
-  // const setGreen = useUpdateGreen();
-
-  // const blue = useBlue();
-  // const setBlue = useUpdateBlue();
   const { red, setRed, green, setGreen, blue, setBlue } = useColors();
 
   return (
