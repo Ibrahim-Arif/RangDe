@@ -9,12 +9,13 @@ import Icon from "../components/Icon";
 import Screen from "../components/Screen";
 
 import {
-  useRed,
-  useUpdateRed,
-  useGreen,
-  useUpdateGreen,
-  useBlue,
-  useUpdateBlue,
+  // useRed,
+  // useUpdateRed,
+  // useGreen,
+  // useUpdateGreen,
+  // useBlue,
+  // useUpdateBlue,
+  useColors,
 } from "../components/StateContext";
 
 const [incrementBy, decrementBy] = [10, -5];
@@ -36,14 +37,15 @@ const handleSave = async (toSave) => {
 };
 
 function MainScreen({ navigation }) {
-  const red = useRed();
-  const setRed = useUpdateRed();
+  // const red = useRed();
+  // const setRed = useUpdateRed();
 
-  const green = useGreen();
-  const setGreen = useUpdateGreen();
+  // const green = useGreen();
+  // const setGreen = useUpdateGreen();
 
-  const blue = useBlue();
-  const setBlue = useUpdateBlue();
+  // const blue = useBlue();
+  // const setBlue = useUpdateBlue();
+  const { red, setRed, green, setGreen, blue, setBlue } = useColors();
 
   return (
     <Screen style={styles.container}>

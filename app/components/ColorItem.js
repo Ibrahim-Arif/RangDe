@@ -1,16 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import {
-  useUpdateRed,
-  useUpdateGreen,
-  useUpdateBlue,
-} from "../components/StateContext";
+import { useColors } from "../components/StateContext";
 
 function ColorItem({ color, navigation, onLongPress }) {
   const { red, green, blue } = color;
-  const setRed = useUpdateRed();
-  const setGreen = useUpdateGreen();
-  const setBlue = useUpdateBlue();
+  const { setRed, setGreen, setBlue } = useColors();
 
   return (
     <TouchableOpacity
