@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, Alert, Platform } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
@@ -12,6 +11,39 @@ import Screen from "../components/Screen";
 import { useColors } from "../components/StateContext";
 
 const [incrementBy, decrementBy] = [10, -5];
+
+const registerForPushNotificationsAsync = async () => {
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+
+  let finalStatus = existingStatus;
+  if (existingStatus !== "granted") {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== "granted")
+    return alert("Failed to get push token for push notification!");
+};
+
+const savedNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Saved Successfully!",
+      body: "Go to menu to get saved colors.",
+    },
+    trigger: { seconds: 1 },
+  });
+};
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: true,
+      shouldShowAlert: true,
+    };
+  },
+});
+
 const handleColorChange = (toChange, initialValue, change) => {
   toChange(
     initialValue + change > 255 || initialValue + change < 0
@@ -22,57 +54,18 @@ const handleColorChange = (toChange, initialValue, change) => {
 const handleSave = async (toSave) => {
   try {
     await AsyncStorage.setItem(JSON.stringify(toSave), "");
-    Alert.alert("Notice!", "Saved successfully...");
+    savedNotification();
   } catch (error) {
     console.log(error);
   }
 };
 
-// const registerForPushNotificationsAsync = async () => {
-//   if (Constants.isDevice) {
-//     const {
-//       status: existingStatus,
-//     } = await Notifications.getPermissionsAsync();
-
-//     let finalStatus = existingStatus;
-
-//     if (existingStatus !== "granted") {
-//       const { status } = await Notifications.requestPermissionsAsync();
-//       finalStatus = status;
-//     }
-
-//     if (finalStatus !== "granted")
-//       return alert("Failed to get push token for push notification!");
-//   } else {
-//     alert("Must use physical device for Push Notifications");
-//   }
-
-//   if (Platform.OS === "android") {
-//     Notifications.setNotificationChannelAsync("default", {
-//       name: "default",
-//       importance: Notifications.AndroidImportance.MAX,
-//       vibrationPattern: [0, 250, 250, 250],
-//       lightColor: "#FF231F7C",
-//     });
-//   }
-// };
-
-const schedulePushNotification = async () => {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "You've got mail!",
-      body: "Here is the notification body",
-    },
-    trigger: { seconds: 3 },
-  });
-};
-
 function MainScreen({ navigation }) {
   const { red, setRed, green, setGreen, blue, setBlue } = useColors();
 
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync();
-  // }, []);
+  useEffect(() => {
+    registerForPushNotificationsAsync();
+  }, []);
 
   return (
     <Screen style={styles.container}>
@@ -125,7 +118,6 @@ function MainScreen({ navigation }) {
             setGreen(0);
             setBlue(0);
           }}
-          // onPress={schedulePushNotification}
         />
         <MyButton
           title="save"
