@@ -1,6 +1,8 @@
-import React from "react";
-import { StyleSheet, View, Text, Alert } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text, Alert, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
 import colors from "../config/colors";
 import ColoringButton from "../components/ColoringButton";
@@ -20,15 +22,57 @@ const handleColorChange = (toChange, initialValue, change) => {
 const handleSave = async (toSave) => {
   try {
     await AsyncStorage.setItem(JSON.stringify(toSave), "");
-
     Alert.alert("Notice!", "Saved successfully...");
   } catch (error) {
     console.log(error);
   }
 };
 
+// const registerForPushNotificationsAsync = async () => {
+//   if (Constants.isDevice) {
+//     const {
+//       status: existingStatus,
+//     } = await Notifications.getPermissionsAsync();
+
+//     let finalStatus = existingStatus;
+
+//     if (existingStatus !== "granted") {
+//       const { status } = await Notifications.requestPermissionsAsync();
+//       finalStatus = status;
+//     }
+
+//     if (finalStatus !== "granted")
+//       return alert("Failed to get push token for push notification!");
+//   } else {
+//     alert("Must use physical device for Push Notifications");
+//   }
+
+//   if (Platform.OS === "android") {
+//     Notifications.setNotificationChannelAsync("default", {
+//       name: "default",
+//       importance: Notifications.AndroidImportance.MAX,
+//       vibrationPattern: [0, 250, 250, 250],
+//       lightColor: "#FF231F7C",
+//     });
+//   }
+// };
+
+const schedulePushNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "You've got mail!",
+      body: "Here is the notification body",
+    },
+    trigger: { seconds: 3 },
+  });
+};
+
 function MainScreen({ navigation }) {
   const { red, setRed, green, setGreen, blue, setBlue } = useColors();
+
+  // useEffect(() => {
+  //   registerForPushNotificationsAsync();
+  // }, []);
 
   return (
     <Screen style={styles.container}>
@@ -49,12 +93,7 @@ function MainScreen({ navigation }) {
           style={styles.text}
         >{`rgb(${red}, ${green}, ${blue})`}</Text>
       </View>
-      <View
-        style={{
-          flex: 1.5,
-          alignItems: "center",
-        }}
-      >
+      <View style={{ flex: 1.5, alignItems: "center" }}>
         <ColoringButton
           title="Red"
           value={red}
@@ -86,6 +125,7 @@ function MainScreen({ navigation }) {
             setGreen(0);
             setBlue(0);
           }}
+          // onPress={schedulePushNotification}
         />
         <MyButton
           title="save"
