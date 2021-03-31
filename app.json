@@ -22,7 +22,9 @@
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "package": "com.rangde",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
